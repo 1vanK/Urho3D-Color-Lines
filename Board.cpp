@@ -11,7 +11,6 @@ Board::Board(Context* context) :
     LogicComponent(context)
 {
     SetUpdateEventMask(USE_UPDATE);
-    configFileName_ = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "Color Lines") + "Config.xml";
 }
 
 
@@ -49,26 +48,33 @@ bool Board::CreateBall(bool ghost, BallColor color)
 }
 
 
+String Board::GetRecordsFileName()
+{
+    return GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "Color Lines") + "Record_" + String((int)difficulty_) + ".xml";
+}
+
+
 void Board::SaveRecord()
 {
     XMLFile config(context_);
-    XMLElement root = config.CreateRoot("configuration");
-    root.SetInt("record_" + String((int)difficulty_), score_);
-    config.Save(File(context_, configFileName_, FILE_WRITE));
+    XMLElement root = config.CreateRoot("records");
+    root.SetInt("_1", score_);
+    config.Save(File(context_, GetRecordsFileName(), FILE_WRITE));
 }
 
 
 void Board::LoadRecord()
 {
-    if (!GetSubsystem<FileSystem>()->FileExists(configFileName_))
+    if (!GetSubsystem<FileSystem>()->FileExists(GetRecordsFileName()))
         return;
     XMLFile config(context_);
-    config.Load(File(context_, configFileName_, FILE_READ));
+    config.Load(File(context_, GetRecordsFileName(), FILE_READ));
     XMLElement root = config.GetRoot();
     if (root.IsNull())
         return;
 
-    if (root.HasAttribute("record_" + String((int)difficulty_))) record_ = root.GetInt("record_" + String((int)difficulty_));
+    if (root.HasAttribute("_1"))
+        record_ = root.GetInt("_1");
 }
 
 
@@ -225,6 +231,7 @@ void Board::Restart()
         }
     }
     selectedBall_ = nullptr;
+    LoadRecord();
 
     for (int i = 0; i < numAddBalls_; i++)
         SpawnBall();

@@ -65,7 +65,8 @@ private:
 
     void SaveRecord();
     void LoadRecord();
-    String configFileName_;
     int record_;
+
+    String GetRecordsFileName();
 
 };
