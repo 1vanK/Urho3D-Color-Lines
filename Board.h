@@ -62,4 +62,10 @@ private:
     bool FindPath(const IntVector2& start, const IntVector2& end, Vector<IntVector2>& path);
     bool Valid(const IntVector2 &in);
     bool CheckLines();
+
+    void SaveRecord();
+    void LoadRecord();
+    String configFileName_;
+    int record_;
+
 };

@@ -220,13 +220,22 @@ void Game::CreateUI()
         t->SetName("LineLength");
         t->SetAlignment(HA_RIGHT, VA_BOTTOM);
     }
-
+    {
+        Text* t = new Text(context_);
+        uiRoot->AddChild(t);
+        t->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
+        t->SetColor(Color(0.0f, 0.0f, 0.0f));
+        t->SetName("Record");
+        t->SetAlignment(HA_RIGHT, VA_TOP);
+    }
 
 }
 
 
 void Game::HandleEasyPressed(StringHash eventType, VariantMap& eventData)
 {
+    //if (!window_->IsVisible())  // wtf invisible cotrols recieve keyboard events
+    //    return;
     boardNode_->RemoveAllChildren();
     boardNode_->RemoveAllComponents();
     Board* board = boardNode_->CreateComponent<Board>();
@@ -408,16 +417,16 @@ void Game::MoveCamera(float timeStep)
     //cameraNode_->SetWorldRotation(Quaternion(pitch_, roll_, 0.0f));
     cameraNode_->LookAt(cameraTarget_);
     // сделать LoocTO а мышкой двигать точку зрения
-
+    /*
     if (input->GetKeyDown('W'))
         boardNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep, TS_WORLD);
     if (input->GetKeyDown('S'))
-        boardNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep, TS_WORLD);
+        boardNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep, TS_WORLD);*/
 
     if (input->GetKeyPress(KEY_F2))
         GetSubsystem<DebugHud>()->ToggleAll();
 
-    if (input->GetKeyPress(KEY_SPACE))
+/*    if (input->GetKeyPress(KEY_SPACE))
     {
         boardNode_->RemoveAllChildren();
         boardNode_->RemoveAllComponents();
@@ -426,7 +435,7 @@ void Game::MoveCamera(float timeStep)
         //board->Init(D_EASY);
         board->Init(D_NORMAL);
 //        cameraTarget_ = boardNode_->GetPosition();
-    }
+    }*/
 
     if (input->GetKeyPress(KEY_ESC))
     {

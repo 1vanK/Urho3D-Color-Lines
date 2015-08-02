@@ -11,6 +11,7 @@ Board::Board(Context* context) :
     LogicComponent(context)
 {
     SetUpdateEventMask(USE_UPDATE);
+    configFileName_ = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "Color Lines") + "Config.xml";
 }
 
 
@@ -45,6 +46,29 @@ bool Board::CreateBall(bool ghost, BallColor color)
     board_[y][x] = ball;
     needCheckLines_ = true;
     return true;
+}
+
+
+void Board::SaveRecord()
+{
+    XMLFile config(context_);
+    XMLElement root = config.CreateRoot("configuration");
+    root.SetInt("record_" + String((int)difficulty_), score_);
+    config.Save(File(context_, configFileName_, FILE_WRITE));
+}
+
+
+void Board::LoadRecord()
+{
+    if (!GetSubsystem<FileSystem>()->FileExists(configFileName_))
+        return;
+    XMLFile config(context_);
+    config.Load(File(context_, configFileName_, FILE_READ));
+    XMLElement root = config.GetRoot();
+    if (root.IsNull())
+        return;
+
+    if (root.HasAttribute("record_" + String((int)difficulty_))) record_ = root.GetInt("record_" + String((int)difficulty_));
 }
 
 
@@ -152,6 +176,7 @@ void Board::Init(Difficulty difficulty)
     needSpawnBalls_ = false;
     gameOver_ = false;
     score_ = 0;
+    record_ = 0;
     
     board_.Resize(height_);
     cells_.Resize(height_);
@@ -180,6 +205,7 @@ void Board::Init(Difficulty difficulty)
     }
 
     InitSelection();
+    LoadRecord();
 }
 
 void Board::Restart()
@@ -390,6 +416,11 @@ void Board::Update(float timeStep)
 {
     if (gameOver_)
     {
+        if (score_ > record_)
+        {
+            record_ = score_;
+            SaveRecord();
+        }
         Restart();
         return;
     }
@@ -448,7 +479,8 @@ void Board::Update(float timeStep)
     t->SetText("Colors: " + String(numColors_));
     t = static_cast<Text*>(uiRoot->GetChild("LineLength", true));
     t->SetText("Line length: " + String(lineLength_));
-
+    t = static_cast<Text*>(uiRoot->GetChild("Record", true));
+    t->SetText("Record: " + String(record_));
     // нужно выбрасывать шары если после уделаения линий поле пустое
 }
 
