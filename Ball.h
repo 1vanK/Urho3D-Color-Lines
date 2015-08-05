@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 enum BallColor
@@ -19,7 +19,7 @@ enum BallColor
 
 enum BallState
 {
-    BS_GHOST,
+    BS_GHOST, // маленький шарик-подсказка
     BS_NORMAL,
     BS_DEAD
 };
@@ -33,7 +33,7 @@ public:
     Ball(Context* context);
     static void RegisterObject(Context* context);
     virtual void Update(float timeStep);
-    // ��� ���������� �����
+    // Шар случайного цвета
     void Ball::Init(IntVector2 boardPosition, bool ghost);
     void Ball::Init(IntVector2 boardPosition, bool ghost, BallColor color);
     IntVector2 GetBoardPosition() const { return boardPosition_; }

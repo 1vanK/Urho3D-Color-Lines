@@ -1,7 +1,5 @@
 # Urho3D-Color-Lines
 
-ALPHA VERISON
-
 Esc - open/close Menu
 
 Compiling in Visual Studio:
@@ -11,3 +9,9 @@ Compiling in Visual Studio:
 * CMake: all parametrs (OpenGL, static runtime, etc) must be the same as that of the engine
 * Open Urho3DColorLines.sln and set "Lines" as startup project
 * Build
+
+License: MIT
+
+http://3dgra.blogspot.com
+
+

@@ -1,4 +1,4 @@
-#include "Urho3DAll.h"
+ï»¿#include "Urho3DAll.h"
 #include "Ball.h"
 #include "Cell.h"
 #include "Board.h"
@@ -416,7 +416,7 @@ void Game::MoveCamera(float timeStep)
 
     //cameraNode_->SetWorldRotation(Quaternion(pitch_, roll_, 0.0f));
     cameraNode_->LookAt(cameraTarget_);
-    // ñäåëàòü LoocTO à ìûøêîé äâèãàòü òî÷êó çðåíèÿ
+    // ÑÐ´ÐµÐ»Ð°Ñ‚ÑŒ LoocTO Ð° Ð¼Ñ‹ÑˆÐºÐ¾Ð¹ Ð´Ð²Ð¸Ð³Ð°Ñ‚ÑŒ Ñ‚Ð¾Ñ‡ÐºÑƒ Ð·Ñ€ÐµÐ½Ð¸Ñ
     /*
     if (input->GetKeyDown('W'))
         boardNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep, TS_WORLD);

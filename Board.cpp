@@ -1,4 +1,4 @@
-#include "Urho3DAll.h"
+п»ї#include "Urho3DAll.h"
 #include "Board.h"
 #include "Cell.h"
 #include "Ball.h"
@@ -22,9 +22,9 @@ void Board::RegisterObject(Context* context)
 
 Vector3 Board::IV2ToV3(IntVector2 iv2)
 {
-    // У массива board_ координата y увеличивается вниз, а в 3D пространстве - вверх, поэтому y меняет знак.
-    // Так как координата ячейки обозначает ее центр, а не угол, то расстояние между
-    // центрами первой и последней ячейки равно ширина/высота доски минус одна ячейка.
+    // РЈ РјР°СЃСЃРёРІР° board_ РєРѕРѕСЂРґРёРЅР°С‚Р° y СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РІРЅРёР·, Р° РІ 3D РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ - РІРІРµСЂС…, РїРѕСЌС‚РѕРјСѓ y РјРµРЅСЏРµС‚ Р·РЅР°Рє.
+    // РўР°Рє РєР°Рє РєРѕРѕСЂРґРёРЅР°С‚Р° СЏС‡РµР№РєРё РѕР±РѕР·РЅР°С‡Р°РµС‚ РµРµ С†РµРЅС‚СЂ, Р° РЅРµ СѓРіРѕР», С‚Рѕ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ
+    // С†РµРЅС‚СЂР°РјРё РїРµСЂРІРѕР№ Рё РїРѕСЃР»РµРґРЅРµР№ СЏС‡РµР№РєРё СЂР°РІРЅРѕ С€РёСЂРёРЅР°/РІС‹СЃРѕС‚Р° РґРѕСЃРєРё РјРёРЅСѓСЃ РѕРґРЅР° СЏС‡РµР№РєР°.
     Vector3 half((width_ - 1) * CELL_SIZE * 0.5f, -(height_ - 1) * CELL_SIZE * 0.5f, 0.0f);
     return Vector3(iv2.x_ * CELL_SIZE, -iv2.y_ * CELL_SIZE, 0.0f) - half;
 }
@@ -313,10 +313,10 @@ void Board::HandleClickCell(const Cell* cell)
         {
             bool needCreateGhost = false;
             BallColor color;
-            if (board_[newPos.y_][newPos.x_]) // в точке назначения может быть призрак
+            if (board_[newPos.y_][newPos.x_]) // РІ С‚РѕС‡РєРµ РЅР°Р·РЅР°С‡РµРЅРёСЏ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСЂРёР·СЂР°Рє
             {
                 color = board_[newPos.y_][newPos.x_]->GetColor();
-                board_[newPos.y_][newPos.x_]->Kill(); // убиваем
+                board_[newPos.y_][newPos.x_]->Kill(); // СѓР±РёРІР°РµРј
                 needCreateGhost = true;
             }
             board_[newPos.y_][newPos.x_] = selectedBall_;
@@ -332,20 +332,20 @@ void Board::HandleClickCell(const Cell* cell)
             needCheckLines_ = true;
             needSpawnBalls_ = true;
             if (needCreateGhost)
-                CreateBall(true, color); // создаем призрака в новом месте того же цвета
+                CreateBall(true, color); // СЃРѕР·РґР°РµРј РїСЂРёР·СЂР°РєР° РІ РЅРѕРІРѕРј РјРµСЃС‚Рµ С‚РѕРіРѕ Р¶Рµ С†РІРµС‚Р°
         }
     }
 }
 
 
-//Проверить можно ли через ячейку in двигатся шару
+//РџСЂРѕРІРµСЂРёС‚СЊ РјРѕР¶РЅРѕ Р»Рё С‡РµСЂРµР· СЏС‡РµР№РєСѓ in РґРІРёРіР°С‚СЃСЏ С€Р°СЂСѓ
 bool Board::Valid(const IntVector2 &in)
 {
-    if (in.x_ < 0 || in.x_ >= width_) // выход за границы
+    if (in.x_ < 0 || in.x_ >= width_) // РІС‹С…РѕРґ Р·Р° РіСЂР°РЅРёС†С‹
         return false;
     if (in.y_ < 0 || in.y_ >= height_)
         return false;
-    if (board_[in.y_][in.x_] && board_[in.y_][in.x_]->GetBallState() == BS_NORMAL) // уже занята
+    if (board_[in.y_][in.x_] && board_[in.y_][in.x_]->GetBallState() == BS_NORMAL) // СѓР¶Рµ Р·Р°РЅСЏС‚Р°
         return false;
     return true;
 }
@@ -356,8 +356,8 @@ bool Board::FindPath(const IntVector2& start, const IntVector2& end, Vector<IntV
 {
     struct st
     {
-        IntVector2 pred; // предыдущая клетка, ведущая к началу
-        int mark; // обработана ли ячейка (то есть найден ли к ней путь от стартовой)
+        IntVector2 pred; // РїСЂРµРґС‹РґСѓС‰Р°СЏ РєР»РµС‚РєР°, РІРµРґСѓС‰Р°СЏ Рє РЅР°С‡Р°Р»Сѓ
+        int mark; // РѕР±СЂР°Р±РѕС‚Р°РЅР° Р»Рё СЏС‡РµР№РєР° (С‚Рѕ РµСЃС‚СЊ РЅР°Р№РґРµРЅ Р»Рё Рє РЅРµР№ РїСѓС‚СЊ РѕС‚ СЃС‚Р°СЂС‚РѕРІРѕР№)
     };
     Vector<Vector<st> > v;
     v.Resize(height_);
@@ -366,18 +366,18 @@ bool Board::FindPath(const IntVector2& start, const IntVector2& end, Vector<IntV
         v[i].Resize(width_);
         for (int j = 0; j < width_; j++)
         {
-            v[i][j].mark = 0; // все ячейки необработаны
+            v[i][j].mark = 0; // РІСЃРµ СЏС‡РµР№РєРё РЅРµРѕР±СЂР°Р±РѕС‚Р°РЅС‹
         }
     }
-    std::queue<IntVector2> q; // нужно обработать соседей данных клеток
-    v[start.y_][start.x_].mark = 1; // стартовую клетка обработана сразу (известен путь от стартовой до стартовой :)
-    q.push(start); // нужно обработать всех соседей стартовой кнопки
-    while (!q.empty()) // если очередь, то путь не найден
+    std::queue<IntVector2> q; // РЅСѓР¶РЅРѕ РѕР±СЂР°Р±РѕС‚Р°С‚СЊ СЃРѕСЃРµРґРµР№ РґР°РЅРЅС‹С… РєР»РµС‚РѕРє
+    v[start.y_][start.x_].mark = 1; // СЃС‚Р°СЂС‚РѕРІСѓСЋ РєР»РµС‚РєР° РѕР±СЂР°Р±РѕС‚Р°РЅР° СЃСЂР°Р·Сѓ (РёР·РІРµСЃС‚РµРЅ РїСѓС‚СЊ РѕС‚ СЃС‚Р°СЂС‚РѕРІРѕР№ РґРѕ СЃС‚Р°СЂС‚РѕРІРѕР№ :)
+    q.push(start); // РЅСѓР¶РЅРѕ РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РІСЃРµС… СЃРѕСЃРµРґРµР№ СЃС‚Р°СЂС‚РѕРІРѕР№ РєРЅРѕРїРєРё
+    while (!q.empty()) // РµСЃР»Рё РѕС‡РµСЂРµРґСЊ, С‚Рѕ РїСѓС‚СЊ РЅРµ РЅР°Р№РґРµРЅ
     {
         IntVector2 k = q.front();
-        for (int i = 0; i<4; i++) // 4 соседа вокруг клетки
+        for (int i = 0; i<4; i++) // 4 СЃРѕСЃРµРґР° РІРѕРєСЂСѓРі РєР»РµС‚РєРё
         {
-            IntVector2 l = k; // очередной сосед
+            IntVector2 l = k; // РѕС‡РµСЂРµРґРЅРѕР№ СЃРѕСЃРµРґ
             if (i == 0)
                 l.x_--;
             else if (i == 1)
@@ -392,7 +392,7 @@ bool Board::FindPath(const IntVector2& start, const IntVector2& end, Vector<IntV
                 v[l.y_][l.x_].pred = k;
                 q.push(l);
 
-                if (l == end) // нашли конечную точку
+                if (l == end) // РЅР°С€Р»Рё РєРѕРЅРµС‡РЅСѓСЋ С‚РѕС‡РєСѓ
                 {
                     do
                     {
@@ -442,8 +442,8 @@ void Board::Update(float timeStep)
             needSpawnBalls_ = false;
         }
         needCheckLines_ = false;
-        // может быть что поле полностью занято, новых шаров спанить не надо и ходить некуда
-        // не работает чот
+        // РјРѕР¶РµС‚ Р±С‹С‚СЊ С‡С‚Рѕ РїРѕР»Рµ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РЅСЏС‚Рѕ, РЅРѕРІС‹С… С€Р°СЂРѕРІ СЃРїР°РЅРёС‚СЊ РЅРµ РЅР°РґРѕ Рё С…РѕРґРёС‚СЊ РЅРµРєСѓРґР°
+        // РЅРµ СЂР°Р±РѕС‚Р°РµС‚ С‡РѕС‚
         gameOver_ = true;
         for (int i = 0; i < height_; i++)
         {
@@ -488,7 +488,7 @@ void Board::Update(float timeStep)
     t->SetText("Line length: " + String(lineLength_));
     t = static_cast<Text*>(uiRoot->GetChild("Record", true));
     t->SetText("Record: " + String(record_));
-    // нужно выбрасывать шары если после уделаения линий поле пустое
+    // РЅСѓР¶РЅРѕ РІС‹Р±СЂР°СЃС‹РІР°С‚СЊ С€Р°СЂС‹ РµСЃР»Рё РїРѕСЃР»Рµ СѓРґРµР»Р°РµРЅРёСЏ Р»РёРЅРёР№ РїРѕР»Рµ РїСѓСЃС‚РѕРµ
 }
 
 
@@ -514,7 +514,7 @@ bool Board::CheckLines()
                 continue;
             BallColor color = board_[i][j]->GetColor();
             int length = 1;
-            for (int k = i - 1; k >= 0; k--) // по веритикали
+            for (int k = i - 1; k >= 0; k--) // РїРѕ РІРµСЂРёС‚РёРєР°Р»Рё
             {
                 if (!board_[k][j] || board_[k][j]->GetBallState() != BS_NORMAL)
                     break;
@@ -538,7 +538,7 @@ bool Board::CheckLines()
                 continue;
             }
             length = 1;
-            for (int k = j - 1; k >= 0; k--) // по горизонтали
+            for (int k = j - 1; k >= 0; k--) // РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
             {
                 if (!board_[i][k] || board_[i][k]->GetBallState() != BS_NORMAL)
                     break;
@@ -562,7 +562,7 @@ bool Board::CheckLines()
                 continue;
             }
             length = 1;
-            for (int k = i - 1, m = j - 1; k >= 0 && m >= 0; k--, m--) // по диагонали 1
+            for (int k = i - 1, m = j - 1; k >= 0 && m >= 0; k--, m--) // РїРѕ РґРёР°РіРѕРЅР°Р»Рё 1
             {
                 if (!board_[k][m] || board_[k][m]->GetBallState() != BS_NORMAL)
                     break;
@@ -586,7 +586,7 @@ bool Board::CheckLines()
                 continue;
             }
             length = 1;
-            for (int k = i - 1, m = j + 1; k >= 0 && m < width_; k--, m++) // по диагонали 2
+            for (int k = i - 1, m = j + 1; k >= 0 && m < width_; k--, m++) // РїРѕ РґРёР°РіРѕРЅР°Р»Рё 2
             {
                 if (!board_[k][m] || board_[k][m]->GetBallState() != BS_NORMAL)
                     break;
@@ -629,7 +629,7 @@ bool Board::CheckLines()
     }
 
     score_ += totalExploded;
-    if (totalExploded > lineLength_) // за каждый шарик выше минимума дополнительное очко
+    if (totalExploded > lineLength_) // Р·Р° РєР°Р¶РґС‹Р№ С€Р°СЂРёРє РІС‹С€Рµ РјРёРЅРёРјСѓРјР° РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРµ РѕС‡РєРѕ
     {
         score_ += totalExploded - lineLength_;
     }

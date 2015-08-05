@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+// Этот компонент запускает шарик по определенной траектории, после завершения компонент удаляет сам себя
 
 class Path : public LogicComponent
 {
@@ -20,6 +21,6 @@ private:
     float speed_;
     float traveled_;
 
-    static int totalCount_;
+    static int totalCount_; // общее число экземпляров объекта, позволяет блокировать игру, когда двигаются шарики
 };
 
