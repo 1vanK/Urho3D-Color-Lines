@@ -1,5 +1,9 @@
 # Urho3D-Color-Lines
 
+The "bin" folder contains a compiled version of the game.
+
+![screencolorlines](https://cloud.githubusercontent.com/assets/13021826/9157246/4c0a8fb0-3f07-11e5-9ec6-c963a93e6228.jpg)
+
 Esc - open/close Menu
 
 Compiling in Visual Studio:
