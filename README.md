@@ -14,8 +14,8 @@ Compiling in Visual Studio:
 * Open Urho3DColorLines.sln and set "Lines" as startup project
 * Build
 
-License: MIT
+License: Public Domain
 
-http://3dgra.blogspot.com
+p.s. Can not be working with the current version of the engine
 
 
